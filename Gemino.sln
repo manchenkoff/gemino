@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gemino", "Gemino\Gemino.csproj", "{34C58288-84B7-4483-9444-F4CCC3930DE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{A02A8A17-1DEC-4D13-9AEC-98F17A057DAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sync", "Sync\Sync.csproj", "{A75BE57A-ABCB-4EC2-AB08-F348FADABB11}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{34C58288-84B7-4483-9444-F4CCC3930DE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34C58288-84B7-4483-9444-F4CCC3930DE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34C58288-84B7-4483-9444-F4CCC3930DE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34C58288-84B7-4483-9444-F4CCC3930DE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A02A8A17-1DEC-4D13-9AEC-98F17A057DAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A02A8A17-1DEC-4D13-9AEC-98F17A057DAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A02A8A17-1DEC-4D13-9AEC-98F17A057DAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A02A8A17-1DEC-4D13-9AEC-98F17A057DAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A75BE57A-ABCB-4EC2-AB08-F348FADABB11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A75BE57A-ABCB-4EC2-AB08-F348FADABB11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A75BE57A-ABCB-4EC2-AB08-F348FADABB11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A75BE57A-ABCB-4EC2-AB08-F348FADABB11}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

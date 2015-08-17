@@ -1,0 +1,82 @@
+﻿<Window x:Class="Gemino.GUI.Main"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gemino.GUI"
+        mc:Ignorable="d"
+        Title="Gemino - Smart Sync" Height="600" Width="800" Icon="/Gemino;component/Resources/sync.ico" WindowStartupLocation="CenterScreen" FontSize="14.667" Initialized="WindowInit" Closing="OnFormClosing" ResizeMode="CanResizeWithGrip" MinWidth="800" MinHeight="600">
+    <Grid Background="#FF37D87C">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Margin="0">
+            <Button x:Name="FolderViewButton" Background="{x:Null}" BorderBrush="{x:Null}" Padding="30" Height="130" ToolTip="Настройки директорий" Cursor="Hand" Click="ShowFolders">
+                <Image Source="/Gemino;component/Resources/folders.png"></Image>
+            </Button>
+            <Button x:Name="SettingsViewButton" Background="{x:Null}" BorderBrush="{x:Null}" Padding="30" Height="130" ToolTip="Параметры программы" Cursor="Hand" Click="ShowSettings">
+                <Image Source="/Gemino;component/Resources/settings.png"></Image>
+            </Button>
+        </StackPanel>
+        <Grid Grid.Column="1" Margin="0" Grid.RowSpan="2" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="gridFolders" Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="FolderViewTitle" HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="Синхронизация директорий" VerticalAlignment="Center" FontSize="24" FontFamily="Segoe UI Light" TextDecorations="{x:Null}"/>
+                <ListView x:Name="FoldersListView" Margin="3" Grid.Row="2" ItemsSource="{Binding Folders}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Name, Mode=OneWay}"/>
+                            <GridViewColumn Header="Источник" DisplayMemberBinding="{Binding Source, Mode=OneWay}"/>
+                            <GridViewColumn Header="Назначение" DisplayMemberBinding="{Binding Destination, Mode=OneWay}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <StackPanel Margin="5,0,0,0" Grid.Row="1" Orientation="Horizontal">
+                    <Button x:Name="AddFolderButton" Margin="0" Grid.Row="1" HorizontalAlignment="Center" Width="50" Height="50" BorderBrush="{x:Null}" Background="{x:Null}" Click="AddFolder">
+                        <Image Source="/Gemino;component/Resources/add.png" ToolTip="Добавить"/>
+                    </Button>
+                    <Button x:Name="EditFolderButton" Margin="0" Grid.Row="1" HorizontalAlignment="Center" Width="50" Height="50" BorderBrush="{x:Null}" Background="{x:Null}" Click="EditFolder">
+                        <Image Source="/Gemino;component/Resources/edit.png" ToolTip="Изменить"/>
+                    </Button>
+                    <Button x:Name="RemoveFolderButton" Margin="0" Grid.Row="1" HorizontalAlignment="Center" Width="50" Height="50" BorderBrush="{x:Null}" Background="{x:Null}" Click="RemoveFolder">
+                        <Image Source="/Gemino;component/Resources/remove.png" ToolTip="Удалить"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+            <Grid x:Name="gridSettings" Margin="0" d:IsHidden="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="70"/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="SettingsViewTitle" HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="Параметры" VerticalAlignment="Center" FontSize="24" FontFamily="Segoe UI Light" TextDecorations="{x:Null}"/>
+                <CheckBox x:Name="AutoloadCheckbox" IsChecked="{Binding Autoload}" Content="Загружать вместе с Windows" HorizontalAlignment="Left" Margin="20,28.222,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="#FF37D87C" Grid.Row="1" Click="AutoloadClick"/>
+                <CheckBox x:Name="LogCheckbox" IsChecked="{Binding Log}" Content="Включить запись лог-файлов" HorizontalAlignment="Left" Margin="20,52.222,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="#FF37D87C" Grid.Row="1" Click="LogClick" ToolTip="Мои документы\Gemino\Logs"/>
+                <Label x:Name="SyncPathLabel" Content="Путь для синхронизаций (по умолчанию)" HorizontalAlignment="Left" Margin="20,98.222,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+                <TextBox x:Name="SyncPathTextbox" Margin="20,133.222,100,0" TextWrapping="NoWrap" IsReadOnly="True" Text="{Binding SyncPath, Mode=OneWay}" VerticalAlignment="Top" Padding="5" BorderBrush="#FF37D87C" Grid.Row="1" Foreground="Gray"/>
+                <Button x:Name="BrowseButton" Content="Обзор" HorizontalAlignment="Right" Margin="0,133.222,15,0" VerticalAlignment="Top" Width="75" BorderBrush="#FF37D87C" Background="{x:Null}" Padding="5" Foreground="#FF37D87C" Grid.Row="1" Click="ShowFolderDialog"/>
+                <Button x:Name="ImportSettingsButton" Content="Импорт настроек" HorizontalAlignment="Left" Margin="20,200,0,0" VerticalAlignment="Top" Width="135" BorderBrush="#FF37D87C" Background="{x:Null}" Padding="5" Foreground="#FF37D87C" Grid.Row="1" Click="ImportSettings"/>
+                <Button x:Name="ExportSettingsButton" Content="Экспорт настроек" HorizontalAlignment="Left" Margin="160,200,0,0" VerticalAlignment="Top" Width="135" BorderBrush="#FF37D87C" Background="{x:Null}" Padding="5" Foreground="#FF37D87C" Grid.Row="1" Click="ExportSettings"/>
+                <Button x:Name="CheckUpdatesButton" Content="Проверка обновлений" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" BorderBrush="#FF37D87C" Background="{x:Null}" Padding="5" Grid.Row="2" Foreground="#FF37D87C" Click="CheckUpdates" Width="170" Height="35"/>
+                <TextBlock x:Name="UpdatesAvailableText" HorizontalAlignment="Left" Margin="210,0,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center"/>
+            </Grid>
+            <Button x:Name="CancelButton" Content="Отмена" HorizontalAlignment="Right" Margin="0,19,20,19" VerticalAlignment="Center" Width="100" BorderBrush="#FF37D87C" Background="{x:Null}" Padding="5" Foreground="#FF37D87C" Grid.Row="1" Click="Cancel" IsCancel="True"/>
+            <Button x:Name="ApplyButton" Content="Применить" HorizontalAlignment="Right" Margin="0,19,250,19" VerticalAlignment="Center" BorderBrush="#FF37D87C" Background="{x:Null}" Padding="5" Foreground="#FF37D87C" Grid.Row="1" Width="100" Click="Apply"/>
+            <Button x:Name="SaveButton" Content="Сохранить" HorizontalAlignment="Right" Margin="0,19,145,19" VerticalAlignment="Center" BorderBrush="#FF37D87C" Background="{x:Null}" Padding="5" Foreground="#FF37D87C" Grid.Row="1" Width="100" Click="Save" IsDefault="True"/>
+        </Grid>
+        <Button x:Name="AboutButton" Content="О программе" Margin="10,0" Grid.Row="1" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="White" Foreground="White" Cursor="Hand" ToolTip="О программе" Click="ShowAbout" Padding="5" FontSize="13.333"/>
+    </Grid>
+</Window>
