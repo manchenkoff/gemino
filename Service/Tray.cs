@@ -29,6 +29,8 @@ namespace Service {
                 new MenuItem("Выход", Quit)
             });
 
+            _menu.MenuItems[0].Enabled = false;
+
             _menu.Popup += (s, e) => {
                 if (Watchers != null && Watchers.Count > 0) {
                     _menu.MenuItems[0].Text = string.Format(
@@ -122,6 +124,7 @@ namespace Service {
                     Quit(sender, e);
 
             } catch (Exception ex) {
+                Log(string.Format("Ошибка - {0}", ex.Message));
                 ShowTip(ex.Message, ToolTipIcon.Error);
             }
         }
@@ -162,6 +165,7 @@ namespace Service {
                 if (Watchers.Count > 0) Log(string.Format("Запущено {0} 'наблюдателей'", Watchers.Count));
                 
             } catch (Exception e) {
+                Log(string.Format("Ошибка - {0}", e.Message));
                 ShowTip(e.Message, ToolTipIcon.Error);
             }
         }

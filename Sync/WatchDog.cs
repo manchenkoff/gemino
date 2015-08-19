@@ -231,6 +231,7 @@ namespace Sync {
 
             } catch (Exception e) {
                 //если получаем исключение - выводим диалоговое сообщение
+                Log(string.Format("Ошибка - {0}", e.Message));
                 throw new Exception(e.Message);
             }
         }
@@ -259,6 +260,7 @@ namespace Sync {
                 else File.Move(sourcePath, destPath); //если это файл, меняем его название
             } catch (Exception e) {
                 //если получаем исключение - выводим ошибку
+                Log(string.Format("Ошибка - {0}", e.Message));
                 throw new Exception(e.Message);
             }
         }
@@ -282,6 +284,7 @@ namespace Sync {
                 else File.Delete(sourcePath); //иначе просто удаляем файл
             } catch (Exception e) {
                 //если получаем исключение - выводим ошибку
+                Log(string.Format("Ошибка - {0}", e.Message));
                 throw new Exception(e.Message);
             }
         }
@@ -303,6 +306,7 @@ namespace Sync {
                 File.Copy(fullpath, filename, true);
             } catch (Exception e) {
                 //если получаем исключение - выводим ошибку
+                Log(string.Format("Ошибка - {0}", e.Message));
                 throw new Exception(e.Message);
             }
         }
