@@ -275,7 +275,7 @@ namespace Gemino.GUI {
 
         //показ окна о программе
         private void ShowAbout(object sender, RoutedEventArgs e) {
-            new AboutWindow().ShowDialog();
+            new About().ShowDialog();
         }
         #endregion
     }

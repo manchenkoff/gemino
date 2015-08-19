@@ -1,0 +1,26 @@
+﻿<Window x:Class="Gemino.GUI.About"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gemino.GUI"
+        mc:Ignorable="d"
+        Title="О программе" Height="602" Width="519" ResizeMode="NoResize" Icon="/Gemino;component/Resources/sync.ico" WindowStartupLocation="CenterScreen">
+    <Grid Margin="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="140"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Image x:Name="appIcon" HorizontalAlignment="Left" Margin="20,0,0,0" Source="/Gemino;component/Resources/sync.png" Width="104"/>
+        <Label x:Name="appName" Content="Gemino - SmartSync" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" Grid.Column="1"/>
+        <Label x:Name="appVersion" Content="Версия 0.1" Grid.Column="1" HorizontalAlignment="Center" Margin="0,55,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="appCopyrights" Content="Copyright © Manchenkov Artyom 2015" Grid.Column="1" HorizontalAlignment="Center" Margin="0,80,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="appCompany" Content="DeepSide Interactive" Grid.Column="1" HorizontalAlignment="Center" Margin="0,105,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="appDescription" Margin="10" Grid.Row="1" TextWrapping="Wrap" IsReadOnly="True" Grid.ColumnSpan="2" Padding="5" TextAlignment="Justify" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"/>
+
+    </Grid>
+</Window>
