@@ -1,5 +1,6 @@
 ﻿using Sync;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Forms;
@@ -28,11 +29,35 @@ namespace Gemino.GUI {
         #region Constructors
         public Main() {
             InitializeComponent();
+            CheckProcessStarted(); //проверка на наличиче запущенного Service.exe
             LoadWindowProps(); //загружаем параметры окна из настроек
         }
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Проверка запущенного процесса Service.exe
+        /// </summary>
+        void CheckProcessStarted() {
+            //ищем процесс приложения в трее
+            Process[] geminoProcs = Process.GetProcessesByName("Service");
+            //если уже запущен
+            if (geminoProcs != null && geminoProcs.Length > 0) {
+                return; //возврат из функции
+            } else {
+                //иначе создаем процесс Service.exe
+                Process startService = new Process {
+                    StartInfo = new ProcessStartInfo(
+                        Path.Combine(
+                            Directory.GetCurrentDirectory(),
+                            "Service.exe"
+                            )
+                        )
+                };
+                //и запускаем его
+                startService.Start();
+            }
+        }
         /// <summary>
         /// Сохранение настроек
         /// </summary>

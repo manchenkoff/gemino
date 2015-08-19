@@ -11,6 +11,7 @@ namespace Service {
         #region Properties
         private NotifyIcon _icon; //иконка в трее
         private ContextMenu _menu; //контекстное меню иконки
+        private bool SettingsStarted = false; //запущены ли настройки
 
         private Config config; //файл конфигурации
         private List<WatchDog> Watchers; //коллекция 'наблюдателей'
@@ -63,6 +64,11 @@ namespace Service {
                 Visible = true, //видимость
                 Text = "Gemino - SmartSync", //заголовок
                 ContextMenu = _menu //присваиваем меню
+            };
+
+            //открытие настроек по двойному щелчку
+            _icon.DoubleClick += (s, e) => {
+                Settings(s, e);
             };
 
             #region First Launch Program
@@ -177,30 +183,39 @@ namespace Service {
 
         //обработчик настроек
         private void Settings(object sender, EventArgs e) {
-            try {
-                //пишем в лог о файле запуска
-                Log(string.Format("Запуск параметров ({0})...", Properties.Settings.Default.ExePath));
-                //создаем процесс для запуска по пути
-                Process settings = new Process {
-                    StartInfo = new ProcessStartInfo(
-                        Properties.Settings.Default.ExePath
-                    )
-                };
+            //если настройки уже запущены
+            if (SettingsStarted) {
+                return; //возврат из функции
+            } else {
+                try {
+                    //пишем в лог о файле запуска
+                    Log(string.Format("Запуск параметров ({0})...", Properties.Settings.Default.ExePath));
+                    //создаем процесс для запуска по пути
+                    Process settings = new Process {
+                        StartInfo = new ProcessStartInfo(
+                            Properties.Settings.Default.ExePath
+                        )
+                    };
 
-                //запускаем процесс
-                settings.Start();
-                //дожидаемся выхода
-                settings.WaitForExit();
-                //если настройки закрыты и код выхода равен 1
-                if (settings.HasExited && settings.ExitCode == 1)
-                    Reload(); //перезагружаем настройки
-                else if (settings.HasExited && settings.ExitCode == 2) //если код выхода 2
-                    Quit(sender, e); //значит закрываем приложение для обновления
-            } catch (Exception ex) {
-                //если получили исключение, пишем в лог ошибку
-                Log(string.Format("Ошибка - {0}", ex.Message));
-                //и выводим сообщение
-                ShowTip(ex.Message, ToolTipIcon.Error);
+                    //запускаем процесс
+                    settings.Start();
+                    //записываем запуск настроек
+                    SettingsStarted = true;
+                    //дожидаемся выхода
+                    settings.WaitForExit();
+                    //если настройки закрыты и код выхода равен 1
+                    if (settings.HasExited && settings.ExitCode == 1)
+                        Reload(); //перезагружаем настройки
+                    else if (settings.HasExited && settings.ExitCode == 2) //если код выхода 2
+                        Quit(sender, e); //значит закрываем приложение для обновления
+                    //меняем переменную открытия настроек
+                    SettingsStarted = false;
+                } catch (Exception ex) {
+                    //если получили исключение, пишем в лог ошибку
+                    Log(string.Format("Ошибка - {0}", ex.Message));
+                    //и выводим сообщение
+                    ShowTip(ex.Message, ToolTipIcon.Error);
+                }
             }
         }
 
