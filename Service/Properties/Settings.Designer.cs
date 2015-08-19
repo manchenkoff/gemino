@@ -34,5 +34,17 @@ namespace Service.Properties {
                 this["FirstLaunch"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ExePath {
+            get {
+                return ((string)(this["ExePath"]));
+            }
+            set {
+                this["ExePath"] = value;
+            }
+        }
     }
 }

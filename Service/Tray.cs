@@ -56,6 +56,10 @@ namespace Service {
             #region First Launch Program
             if (Properties.Settings.Default.FirstLaunch) {
                 Properties.Settings.Default.FirstLaunch = false;
+                Properties.Settings.Default.ExePath = Path.Combine(
+                    Path.GetDirectoryName(Application.ExecutablePath),
+                    "Gemino.exe"
+                    );
                 Properties.Settings.Default.Save();
                 ShowTip("Для изменения параметров кликните по иконке в трее");
             }
@@ -107,13 +111,11 @@ namespace Service {
 
         private void Settings(object sender, EventArgs e) {
             try {
-                Log("Запуск параметров...");
+                Log(string.Format("Запуск параметров ({0})...", Properties.Settings.Default.ExePath));
                 Process settings = new Process {
                     StartInfo = new ProcessStartInfo(
-                    Path.Combine(
-                        Directory.GetCurrentDirectory(),
-                        "Gemino.exe"
-                        ))
+                        Properties.Settings.Default.ExePath
+                    )
                 };
 
                 settings.Start();
