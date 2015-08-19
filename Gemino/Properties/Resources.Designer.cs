@@ -91,6 +91,28 @@ namespace Gemino.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ################## Gemino Beta v1.1.2 - Исправлено
+        ///
+        ///- Программа запоминает размер окна при следующих запусках
+        ///- В окне настроек кнопки &quot;Применить&quot; и &quot;Сохранить&quot; становятся активными только при внесении изменений
+        ///- Добавлена кнопка для быстрого открытия папки с лог-файлами
+        ///
+        ///################## Gemino Beta v1.1 - Исправлено
+        ///
+        ///- Исправлена ошибка запуска настроек после перезагрузки системы
+        ///
+        ///################## Gemino Beta v1.0 - Добавлено
+        ///
+        ///- Формат даты при записи лог-файлов
+        ///- Добавлен русский перево [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Gemino_Updates {
+            get {
+                return ResourceManager.GetString("Gemino_Updates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap remove {

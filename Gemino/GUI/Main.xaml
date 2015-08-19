@@ -28,7 +28,7 @@
                 <RowDefinition/>
                 <RowDefinition Height="70"/>
             </Grid.RowDefinitions>
-            <Grid x:Name="gridFolders" Margin="0">
+            <Grid x:Name="gridFolders" Margin="0" d:IsHidden="True">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="70"/>
                     <RowDefinition Height="60"/>
@@ -56,7 +56,7 @@
                     </Button>
                 </StackPanel>
             </Grid>
-            <Grid x:Name="gridSettings" Margin="0" d:IsHidden="True">
+            <Grid x:Name="gridSettings" Margin="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="70"/>
                     <RowDefinition/>
@@ -65,17 +65,18 @@
                 <TextBlock x:Name="SettingsViewTitle" HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="Параметры" VerticalAlignment="Center" FontSize="24" FontFamily="Segoe UI Light" TextDecorations="{x:Null}"/>
                 <CheckBox x:Name="AutoloadCheckbox" IsChecked="{Binding Autoload}" Content="Загружать вместе с Windows" HorizontalAlignment="Left" Margin="20,28.222,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="#FF37D87C" Grid.Row="1" Click="AutoloadClick"/>
                 <CheckBox x:Name="LogCheckbox" IsChecked="{Binding Log}" Content="Включить запись лог-файлов" HorizontalAlignment="Left" Margin="20,52.222,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="#FF37D87C" Grid.Row="1" Click="LogClick" ToolTip="Мои документы\Gemino\Logs"/>
-                <Label x:Name="SyncPathLabel" Content="Путь для синхронизаций (по умолчанию)" HorizontalAlignment="Left" Margin="20,98.222,0,0" VerticalAlignment="Top" Grid.Row="1"/>
-                <TextBox x:Name="SyncPathTextbox" Margin="20,133.222,100,0" TextWrapping="NoWrap" IsReadOnly="True" Text="{Binding SyncPath, Mode=OneWay}" VerticalAlignment="Top" Padding="5" BorderBrush="#FF37D87C" Grid.Row="1" Foreground="Gray"/>
-                <Button x:Name="BrowseButton" Content="Обзор" HorizontalAlignment="Right" Margin="0,133.222,15,0" VerticalAlignment="Top" Width="75" BorderBrush="#FF37D87C" Background="{x:Null}" Padding="5" Foreground="#FF37D87C" Grid.Row="1" Click="ShowFolderDialog"/>
-                <Button x:Name="ImportSettingsButton" Content="Импорт настроек" HorizontalAlignment="Left" Margin="20,200,0,0" VerticalAlignment="Top" Width="135" BorderBrush="#FF37D87C" Background="{x:Null}" Padding="5" Foreground="#FF37D87C" Grid.Row="1" Click="ImportSettings"/>
-                <Button x:Name="ExportSettingsButton" Content="Экспорт настроек" HorizontalAlignment="Left" Margin="160,200,0,0" VerticalAlignment="Top" Width="135" BorderBrush="#FF37D87C" Background="{x:Null}" Padding="5" Foreground="#FF37D87C" Grid.Row="1" Click="ExportSettings"/>
+                <Label x:Name="SyncPathLabel" Content="Путь для синхронизаций (по умолчанию)" HorizontalAlignment="Left" Margin="20,140,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+                <TextBox x:Name="SyncPathTextbox" Margin="20,175,100,0" TextWrapping="NoWrap" IsReadOnly="True" Text="{Binding SyncPath, Mode=OneWay}" VerticalAlignment="Top" Padding="5" BorderBrush="#FF37D87C" Grid.Row="1" Foreground="Gray"/>
+                <Button x:Name="BrowseButton" Content="Обзор" HorizontalAlignment="Right" Margin="0,175,15,0" VerticalAlignment="Top" Width="75" BorderBrush="#FF37D87C" Background="{x:Null}" Padding="5" Foreground="#FF37D87C" Grid.Row="1" Click="ShowFolderDialog"/>
+                <Button x:Name="ImportSettingsButton" Content="Импорт настроек" HorizontalAlignment="Left" Margin="20,305,0,0" VerticalAlignment="Top" Width="135" BorderBrush="#FF37D87C" Background="{x:Null}" Padding="5" Foreground="#FF37D87C" Grid.Row="1" Click="ImportSettings"/>
+                <Button x:Name="ExportSettingsButton" Content="Экспорт настроек" HorizontalAlignment="Left" Margin="160,305,0,0" VerticalAlignment="Top" Width="135" BorderBrush="#FF37D87C" Background="{x:Null}" Padding="5" Foreground="#FF37D87C" Grid.Row="1" Click="ExportSettings"/>
                 <Button x:Name="CheckUpdatesButton" Content="Проверка обновлений" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" BorderBrush="#FF37D87C" Background="{x:Null}" Padding="5" Grid.Row="2" Foreground="#FF37D87C" Click="CheckUpdates" Width="170" Height="35"/>
                 <TextBlock x:Name="UpdatesAvailableText" HorizontalAlignment="Left" Margin="210,0,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                <TextBlock x:Name="openLogTextBlock" HorizontalAlignment="Left" Margin="249,51,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Просмотр" VerticalAlignment="Top" Cursor="Hand" TextDecorations="Underline" FontStyle="Italic" Foreground="#FF25428F" ToolTip="Открыть папку с лог-файлами" PreviewMouseDown="OpenLogs"/>
             </Grid>
             <Button x:Name="CancelButton" Content="Отмена" HorizontalAlignment="Right" Margin="0,19,20,19" VerticalAlignment="Center" Width="100" BorderBrush="#FF37D87C" Background="{x:Null}" Padding="5" Foreground="#FF37D87C" Grid.Row="1" Click="Cancel" IsCancel="True"/>
-            <Button x:Name="ApplyButton" Content="Применить" HorizontalAlignment="Right" Margin="0,19,250,19" VerticalAlignment="Center" BorderBrush="#FF37D87C" Background="{x:Null}" Padding="5" Foreground="#FF37D87C" Grid.Row="1" Width="100" Click="Apply"/>
-            <Button x:Name="SaveButton" Content="Сохранить" HorizontalAlignment="Right" Margin="0,19,145,19" VerticalAlignment="Center" BorderBrush="#FF37D87C" Background="{x:Null}" Padding="5" Foreground="#FF37D87C" Grid.Row="1" Width="100" Click="Save" IsDefault="True"/>
+            <Button x:Name="ApplyButton" Content="Применить" HorizontalAlignment="Right" Margin="0,19,250,19" VerticalAlignment="Center" BorderBrush="#FF37D87C" Background="{x:Null}" Padding="5" Foreground="#FF37D87C" Grid.Row="1" Width="100" Click="Apply" IsEnabled="False"/>
+            <Button x:Name="SaveButton" Content="Сохранить" HorizontalAlignment="Right" Margin="0,19,145,19" VerticalAlignment="Center" BorderBrush="#FF37D87C" Background="{x:Null}" Padding="5" Foreground="#FF37D87C" Grid.Row="1" Width="100" Click="Save" IsDefault="True" IsEnabled="False"/>
         </Grid>
         <Button x:Name="AboutButton" Content="О программе" Margin="10,0" Grid.Row="1" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="White" Foreground="White" Cursor="Hand" ToolTip="О программе" Click="ShowAbout" Padding="5" FontSize="13.333"/>
     </Grid>

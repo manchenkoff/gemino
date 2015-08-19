@@ -12,12 +12,23 @@ namespace Gemino.GUI {
 
         #region Properties
         private Config config; //конфигурация приложения
-        private bool IsSaved = true; //сохранены ли изменения
+        private bool _isSaved = true; //сохранены ли изменения
+
+        //свойство для управления состоянием кнопок сохранения
+        private bool IsSaved { 
+            get { return _isSaved; }
+            set {
+                _isSaved = value;
+                //если файл изменен, тогда включаем кнопки
+                ApplyButton.IsEnabled = SaveButton.IsEnabled = !value;
+            }
+        }
         #endregion
 
         #region Constructors
         public Main() {
             InitializeComponent();
+            LoadWindowProps(); //загружаем параметры окна из настроек
         }
         #endregion
 
@@ -29,6 +40,34 @@ namespace Gemino.GUI {
             config.Write(); //пишем настройки в файл
             Environment.ExitCode = 1; //закрываем программу с кодом выхода 1
             IsSaved = true; //меняем значение булевой переменной
+        }
+
+        /// <summary>
+        /// Сохраняем свойства окна в настройки программы
+        /// </summary>
+        void SaveWindowProps() {
+            //ширина окна
+            Properties.Settings.Default.WindowWidth = (int)Width;
+            //высота окна
+            Properties.Settings.Default.WindowHeight = (int)Height;
+            //состояние, max - на весь экран, normal - обычное
+            Properties.Settings.Default.WindowState = (WindowState == WindowState.Maximized) ? "max" : "normal";
+            //сохраняем изменения
+            Properties.Settings.Default.Save();
+        }
+
+        /// <summary>
+        /// Загрузка параметров окна из настроек
+        /// </summary>
+        void LoadWindowProps() {
+            //если состояние - полноэкранное, тогда назначаем его
+            if (Properties.Settings.Default.WindowState == "max") {
+                WindowState = WindowState.Maximized;
+            } else {
+                //иначе просто назначаем ширину и высоту окна
+                Width = Properties.Settings.Default.WindowWidth;
+                Height = Properties.Settings.Default.WindowHeight;
+            }
         }
         #endregion
 
@@ -104,6 +143,32 @@ namespace Gemino.GUI {
         //наажатие на чекбокс "вести логи"
         private void LogClick(object sender, RoutedEventArgs e) {
             IsSaved = false;
+        }
+
+        //нажатие на "открыть логи"
+        private void OpenLogs(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            try {
+                //создаем процесс для открытия папки
+                System.Diagnostics.Process explorer = new System.Diagnostics.Process {
+                    StartInfo = new System.Diagnostics.ProcessStartInfo(
+                        //генерируем путь с лог-файлами
+                        Path.Combine(
+                            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                            "Gemino", "Logs"
+                            )
+                        )
+                };
+                //запускаем проводник
+                explorer.Start();
+            } catch (Exception ex) {
+                //в случае исключения выводим сообщение
+                System.Windows.Forms.MessageBox.Show(
+                    ex.Message,
+                    "Gemino SmartSync - Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                    );
+            }
         }
 
         //выбор папки для синхронизаций по умолчанию
@@ -186,6 +251,9 @@ namespace Gemino.GUI {
 
         //обработчик закрытия формы
         private void OnFormClosing(object sender, System.ComponentModel.CancelEventArgs e) {
+
+            SaveWindowProps(); //сохраняем размер и состояние окна
+
             if (!IsSaved) { //если настройки не сохранены выдаем предупреждение
                 switch (System.Windows.Forms.MessageBox.Show(
                     "Настройки были изменены! Вы действительно хотите выйти?",
@@ -210,6 +278,5 @@ namespace Gemino.GUI {
             new AboutWindow().ShowDialog();
         }
         #endregion
-        
     }
 }

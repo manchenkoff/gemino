@@ -38,11 +38,7 @@ namespace Gemino.GUI {
 
         public string AssemblyDescription {
             get {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
-                if (attributes.Length == 0) {
-                    return "";
-                }
-                return ((AssemblyDescriptionAttribute)attributes[0]).Description;
+                return (Properties.Resources.Gemino_Updates);
             }
         }
 

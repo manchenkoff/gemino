@@ -6,7 +6,7 @@ namespace Sync {
 
         #region Properties
         //текущая версия программы
-        public static string currentVersion = "1.1";
+        public static string currentVersion = "1.1.2";
         //версия на сервере
         public static string newVersion { get; private set; }
 
