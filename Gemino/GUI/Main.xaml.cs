@@ -11,8 +11,8 @@ namespace Gemino.GUI {
     public partial class Main : Window {
 
         #region Properties
-        private Config config;
-        private bool IsSaved = true;
+        private Config config; //конфигурация приложения
+        private bool IsSaved = true; //сохранены ли изменения
         #endregion
 
         #region Constructors
@@ -22,17 +22,22 @@ namespace Gemino.GUI {
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Сохранение настроек
+        /// </summary>
         void SaveSettings() {
-            config.Write();
-            Environment.ExitCode = 1;
-            IsSaved = true;
+            config.Write(); //пишем настройки в файл
+            Environment.ExitCode = 1; //закрываем программу с кодом выхода 1
+            IsSaved = true; //меняем значение булевой переменной
         }
         #endregion
 
         #region Window actions
+        //загрузка окна
         private void WindowInit(object sender, EventArgs e) {
+            //отключаем видимость панели настроек программы
             gridSettings.Visibility = Visibility.Hidden;
-            
+            //генерируем путь настроек
             config = new Config(
                 Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
@@ -40,26 +45,30 @@ namespace Gemino.GUI {
                     "settings.ini"
                     )
                 );
-
+            //назначем настройки как контекст окна (для привязки данных)
             DataContext = config;
         }
 
+        //показать панель настроек папок
         private void ShowFolders(object sender, RoutedEventArgs e) {
             gridFolders.Visibility = Visibility.Visible;
             gridSettings.Visibility = Visibility.Hidden;
         }
 
+        //показать панель настроек программы
         private void ShowSettings(object sender, RoutedEventArgs e) {
             gridFolders.Visibility = Visibility.Hidden;
             gridSettings.Visibility = Visibility.Visible;
         }
 
+        //вызов диалога добавления папки
         private void AddFolder(object sender, RoutedEventArgs e) {
             if (new FolderEditDialog(config).ShowDialog() == true) {
                 IsSaved = false;
             }
         }
 
+        //вызов диалога редактирования выбранной папки
         private void EditFolder(object sender, RoutedEventArgs e) {
             if (FoldersListView.SelectedItem != null &&
                 new FolderEditDialog((SyncObject)FoldersListView.SelectedItem).ShowDialog() == true) {
@@ -67,12 +76,16 @@ namespace Gemino.GUI {
             }
         }
 
+        //удаление папки из коллекции
         private void RemoveFolder(object sender, RoutedEventArgs e) {
             if (FoldersListView.SelectedItem != null) {
                 try {
+                    //попытка удалить папку из коллекции
                     config.Folders.Remove((SyncObject)FoldersListView.SelectedItem);
+                    //настройки изменены
                     IsSaved = false;
                 } catch (Exception ex) {
+                    //в случае исключения выводим сообщение
                     System.Windows.Forms.MessageBox.Show(
                         ex.Message,
                         "Gemino SmartSync - Error",
@@ -83,14 +96,17 @@ namespace Gemino.GUI {
             }
         }
 
+        //нажатие на чекбокс "автозагрузка"
         private void AutoloadClick(object sender, RoutedEventArgs e) {
             IsSaved = false;
         }
 
+        //наажатие на чекбокс "вести логи"
         private void LogClick(object sender, RoutedEventArgs e) {
             IsSaved = false;
         }
 
+        //выбор папки для синхронизаций по умолчанию
         private void ShowFolderDialog(object sender, RoutedEventArgs e) {
             using (FolderBrowserDialog browseFolderDialog = new FolderBrowserDialog()) {
                 browseFolderDialog.Description = "Выберите папку для синхронизаций";
@@ -98,24 +114,27 @@ namespace Gemino.GUI {
                 browseFolderDialog.RootFolder = Environment.SpecialFolder.MyComputer;
 
                 if (browseFolderDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                    //назначаем путь в настроки
                     config.SyncPath = browseFolderDialog.SelectedPath;
                     IsSaved = false;
                 }
             }
         }
 
+        //диалог импорта настроек
         private void ImportSettings(object sender, RoutedEventArgs e) {
             using (OpenFileDialog browseFileDialog = new OpenFileDialog()) {
                 browseFileDialog.Title = "Выберите файл настроек для импорта";
                 browseFileDialog.Filter = "INI Settings|*.ini";
 
                 if (browseFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
-                    config.LoadFrom(browseFileDialog.FileName);
+                    config.LoadFrom(browseFileDialog.FileName); //загружаем из файла настройки
                     IsSaved = false;
                 }
             }
         }
 
+        //диалог экспорта настроек
         private void ExportSettings(object sender, RoutedEventArgs e) {
             using (SaveFileDialog browseFileSaveDialog = new SaveFileDialog()) {
                 browseFileSaveDialog.Title = "Выберите файл для экспорта";
@@ -123,17 +142,22 @@ namespace Gemino.GUI {
                 browseFileSaveDialog.FileName = "settings.ini";
 
                 if (browseFileSaveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
-                    config.WriteTo(browseFileSaveDialog.FileName);
+                    config.WriteTo(browseFileSaveDialog.FileName); //пишем настройки в файл
                 }
             }
         }
 
+        //проверка обновлений
         private void CheckUpdates(object sender, RoutedEventArgs e) {
             switch (Updater.UpdatesAvailable) {
                 case true:
+                    //если доступны, ставим текст рядом с кнопкой
                     UpdatesAvailableText.Text = "Доступна новая версия!";
+                    //меняем текст на кнопке проверки
                     CheckUpdatesButton.Content = "Загрузить обновление";
+                    //добавляем обработчик нажатия на кнопку
                     CheckUpdatesButton.Click += (s, es) => {
+                        //создаем окно загрузчика
                         Downloader downloadDialog = new Downloader();
                         downloadDialog.ShowDialog();
                     };
@@ -144,21 +168,25 @@ namespace Gemino.GUI {
             }
         }
 
+        //кнопка применить
         private void Apply(object sender, RoutedEventArgs e) {
             SaveSettings();
         }
 
+        //кнопка сохранить
         private void Save(object sender, RoutedEventArgs e) {
             SaveSettings();
             Close();
         }
 
+        //кнопка отмены
         private void Cancel(object sender, RoutedEventArgs e) {
             Close();
         }
 
+        //обработчик закрытия формы
         private void OnFormClosing(object sender, System.ComponentModel.CancelEventArgs e) {
-            if (!IsSaved) {
+            if (!IsSaved) { //если настройки не сохранены выдаем предупреждение
                 switch (System.Windows.Forms.MessageBox.Show(
                     "Настройки были изменены! Вы действительно хотите выйти?",
                     "Предупреждение",
@@ -166,21 +194,18 @@ namespace Gemino.GUI {
                     MessageBoxIcon.Question
                     )) {
                     case System.Windows.Forms.DialogResult.Yes:
+                        //если все-таки нажали выход - закрываем без сохранений
                         e.Cancel = false;
                         break;
                     case System.Windows.Forms.DialogResult.No:
+                        //отмена закрытия окна
                         e.Cancel = true;
                         break;
                 }
             }
         }
 
-        private void Hyperlink_Click(object sender, RoutedEventArgs e) {
-            System.Diagnostics.Process browser = new System.Diagnostics.Process {
-                StartInfo = new System.Diagnostics.ProcessStartInfo(Updater.SetupURI)
-            };
-            browser.Start();
-        }
+        //показ окна о программе
         private void ShowAbout(object sender, RoutedEventArgs e) {
             new AboutWindow().ShowDialog();
         }
