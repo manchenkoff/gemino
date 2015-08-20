@@ -6,7 +6,7 @@ namespace Sync {
 
         #region Properties
         //текущая версия программы
-        public static string currentVersion = "1.2.1";
+        public static string currentVersion = "1.2.2";
         //версия на сервере
         public static string newVersion { get; private set; }
 
@@ -19,7 +19,7 @@ namespace Sync {
                 using (WebClient web = new WebClient()) {
                     //загружаем строку из документа
                     newVersion = web.DownloadString(
-                    "http://manchenkoff.me/apps/gemino/gemino.ver"
+                    "http://apps.manchenkoff.me/gemino/downloads/gemino.ver"
                     );
 
                     //если текущая версия не совпадает с версией сервера - вернем true
@@ -33,7 +33,7 @@ namespace Sync {
         /// </summary>
         public static string SetupURI {
             get {
-                return "http://manchenkoff.me/apps/gemino/gemino.exe";
+                return "http://apps.manchenkoff.me/gemino/downloads/gemino.exe";
             }
         }
         #endregion
