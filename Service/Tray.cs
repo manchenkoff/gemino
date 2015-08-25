@@ -108,21 +108,27 @@ namespace Service {
         /// Метод автоматической проверки обновлений
         /// </summary>
         private void AutoUpdate() {
-            //создаем таймер для проверки обновлений
-            Timer interval = new Timer {
-                Interval = 21600000, //каждые 6 часов
-                Enabled = true //включаем его
-            };
-            //обработчик на проверку
-            interval.Tick += (s, e) => {
-                //если есть обновления
-                if (Updater.UpdatesAvailable) {
-                    //выводим сообщение
-                    ShowTip("Доступна новая версия!");
-                }
-            };
-            //запускаем интервал
-            interval.Start();
+            try {
+
+                //создаем таймер для проверки обновлений
+                Timer interval = new Timer {
+                    Interval = 21600000, //каждые 6 часов
+                    Enabled = true //включаем его
+                };
+                //обработчик на проверку
+                interval.Tick += (s, e) => {
+                    //если есть обновления
+                    if (Updater.UpdatesAvailable) {
+                        //выводим сообщение
+                        ShowTip("Доступна новая версия!");
+                    }
+                };
+                //запускаем интервал
+                interval.Start();
+            } catch (Exception e) {
+                //в случае ошибки записываем текст ошибки в лог
+                Log(string.Format("Ошибка обновления - {0}", e.Message));
+            }
         }
 
         /// <summary>
