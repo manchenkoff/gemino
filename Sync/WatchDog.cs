@@ -232,7 +232,6 @@ namespace Sync {
             } catch (Exception e) {
                 //если получаем исключение - выводим диалоговое сообщение
                 Log(string.Format("Ошибка - {0}", e.Message));
-                throw new Exception(e.Message);
             }
         }
         
@@ -261,7 +260,6 @@ namespace Sync {
             } catch (Exception e) {
                 //если получаем исключение - выводим ошибку
                 Log(string.Format("Ошибка - {0}", e.Message));
-                throw new Exception(e.Message);
             }
         }
 
@@ -285,7 +283,6 @@ namespace Sync {
             } catch (Exception e) {
                 //если получаем исключение - выводим ошибку
                 Log(string.Format("Ошибка - {0}", e.Message));
-                throw new Exception(e.Message);
             }
         }
 
@@ -300,14 +297,13 @@ namespace Sync {
             try {
                 //пока файл заблокирован системой или другим процессом
                 while (IsFileLocked(fullpath))
-                    Thread.Sleep(500); //ждем его освобождения
+                    Thread.Sleep(1000); //ждем его освобождения
 
                 //после чего выполняем копирование с заменой
                 File.Copy(fullpath, filename, true);
             } catch (Exception e) {
                 //если получаем исключение - выводим ошибку
-                Log(string.Format("Ошибка - {0}", e.Message));
-                throw new Exception(e.Message);
+                Log(string.Format("Ошибка - {0}, ожидаем освобождения...", e.Message));
             }
         }
 
