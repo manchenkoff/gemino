@@ -244,7 +244,7 @@ namespace Service {
                 Log("### Загрузка приложения ###");
                 //получаем путь к файлу настроек
                 string path = Path.Combine(
-                        Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                         "Gemino",
                         "settings.ini"
                         );
@@ -283,7 +283,7 @@ namespace Service {
         private void ConfigInit() {
             //создаем объект настроек
             config = new Config(true, false, Path.Combine(
-                        Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                        Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), //путь для сохранения по умолчанию
                         "Gemino")
                         );
             //записывем в место по умолчанию

@@ -104,7 +104,7 @@ namespace Gemino.GUI {
             //генерируем путь настроек
             config = new Config(
                 Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                     "Gemino",
                     "settings.ini"
                     )
@@ -174,11 +174,11 @@ namespace Gemino.GUI {
         private void OpenLogs(object sender, System.Windows.Input.MouseButtonEventArgs e) {
             try {
                 //создаем процесс для открытия папки
-                System.Diagnostics.Process explorer = new System.Diagnostics.Process {
-                    StartInfo = new System.Diagnostics.ProcessStartInfo(
+                Process explorer = new Process {
+                    StartInfo = new ProcessStartInfo(
                         //генерируем путь с лог-файлами
                         Path.Combine(
-                            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                             "Gemino", "Logs"
                             )
                         )

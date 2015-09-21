@@ -58,7 +58,7 @@ namespace Sync {
 
             //Генерируем путь для лог-файлов и кешируем в перменную FolderPath
             FolderPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), //Мои документы
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), //%user%/AppData/Roaming
                 "Gemino/Logs" //Папка лог-файлов
                 );
 

@@ -96,9 +96,9 @@ namespace Sync {
         /// </summary>
         public void Write() {
             try {
-                //генерируем путь - Мои документы/Gemino/settings.ini
+                //генерируем путь - %User%/AppData/Roaming/Gemino/settings.ini
                 string folder = Path.Combine(
-                        Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                         "Gemino"
                         );
                 if (!Directory.Exists(folder)) Directory.CreateDirectory(folder); //если папки нет - создаем
