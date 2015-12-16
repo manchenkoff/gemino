@@ -105,33 +105,6 @@ namespace Service {
         }
 
         /// <summary>
-        /// Метод автоматической проверки обновлений
-        /// </summary>
-        private void AutoUpdate() {
-            try {
-
-                //создаем таймер для проверки обновлений
-                Timer interval = new Timer {
-                    Interval = 21600000, //каждые 6 часов
-                    Enabled = true //включаем его
-                };
-                //обработчик на проверку
-                interval.Tick += (s, e) => {
-                    //если есть обновления
-                    if (Updater.UpdatesAvailable) {
-                        //выводим сообщение
-                        ShowTip("Доступна новая версия!");
-                    }
-                };
-                //запускаем интервал
-                interval.Start();
-            } catch (Exception e) {
-                //в случае ошибки записываем текст ошибки в лог
-                Log(string.Format("Ошибка обновления - {0}", e.Message));
-            }
-        }
-
-        /// <summary>
         /// Перезагрузка настроек
         /// </summary>
         public void Reload() {
@@ -265,8 +238,6 @@ namespace Service {
                 }
                 //записываем в лог количество запущенных 'наблюдателей'
                 if (Watchers.Count > 0) Log(string.Format("Запущено {0} 'наблюдателей'", Watchers.Count));
-                //проверяем обновления
-                AutoUpdate();
                 
             } catch (Exception e) {
                 //если получили исключение - пишем в лог-файл
